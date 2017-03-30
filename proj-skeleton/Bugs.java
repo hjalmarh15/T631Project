@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.io.File;
 import java.util.Scanner;
 import java.util.Collections;
+import java.text.DecimalFormat;
 
 class Bugs {
 	public static double T_SUPPORT = 3;
@@ -68,13 +69,15 @@ class Bugs {
 				funcSupport = funcList.size();
 				List<String> temp = new ArrayList<String>(funcList);
 				temp.removeAll(pairList);
+				DecimalFormat df = new DecimalFormat("#.00");
+
 				double confidence = (pairSupport/funcSupport) * 100;
 				if(temp.size() > 0 && confidence >= T_CONFIDENCE && funcSupport >= T_SUPPORT) {
 					bug = temp.get(0);
-					bugString += "Bug: " + firstKey + "in " + bug;
+					bugString += "bug: " + firstKey + " in " + bug;
 					bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
 					bugString += "support: " + (int) pairSupport + ", confidence: ";
-					bugString +=  (confidence )  +  "%\n";
+					bugString +=  (df.format(confidence) )  +  "%\n";
 				}
 				
 				//then secondKey
@@ -85,15 +88,15 @@ class Bugs {
 				confidence = (pairSupport/funcSupport) * 100;
 				if(temp2.size() > 0 && confidence >= T_CONFIDENCE && funcSupport >= T_SUPPORT) {
 					bug = temp2.get(0);
-					bugString += "Bug: " + secondKey + "in " + bug;
+					bugString += "bug: " + secondKey + " in " + bug;
 					bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
 					bugString += "support: " + (int) pairSupport + ", confidence: ";
-					bugString += (confidence) +  "%\n";
+					bugString += df.format(confidence) +  "%\n";
 				}
 				
 			}
 		}
-		System.out.println(bugString);		
+		System.out.print(bugString);		
 	}
 	public static void getScopeForFunctions(String[] lines, Map<String, List<String>> callers, Map<String, List<String>> functions) {
 		
@@ -110,7 +113,7 @@ class Bugs {
 					caller = lines[i].split("'")[1];
 				}
 				else {
-					callee = last;
+					callee = last.split("'")[1];
 					if(callers.get(caller) == null) {
 						List<String> callees = new ArrayList<String>();
 						callees.add(callee);
