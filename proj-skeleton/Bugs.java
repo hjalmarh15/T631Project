@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.Collections;
 
-class Pipair {
+class Bugs {
 	public static double T_SUPPORT = 3;
 	public static double T_CONFIDENCE = 65;
 	public static String filename;

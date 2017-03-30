@@ -1,0 +1,3 @@
+#!/bin/bash
+opt -print-callgraph $1 2> input
+java Bugs input $2 $3

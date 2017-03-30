@@ -4,69 +4,13 @@ you REALLY want to taste LLVM bitcode first-hand, you
 can force output with the `-f' option.
 
 CallGraph Root is: main
-Call graph node <<null function>><<0x21cbd10>>  #uses=0
+Call graph node <<null function>><<0x2284d70>>  #uses=0
   CS<0x0> calls function 'main'
-  CS<0x0> calls function 'scope1'
-  CS<0x0> calls function 'scope2'
-  CS<0x0> calls function 'scope3'
-  CS<0x0> calls function 'scope4'
-  CS<0x0> calls function 'scope5'
-  CS<0x0> calls function 'scope6'
-  CS<0x0> calls function 'A'
   CS<0x0> calls function 'printf'
-  CS<0x0> calls function 'B'
-  CS<0x0> calls function 'C'
-  CS<0x0> calls function 'D'
 
-Call graph node for function: 'scope6'<<0x21ec5e0>>  #uses=2
-  CS<0x21d36f8> calls function 'B'
-  CS<0x21d3778> calls function 'D'
+Call graph node for function: 'main'<<0x2284e10>>  #uses=1
+  CS<0x226be30> calls function 'printf'
 
-Call graph node for function: 'A'<<0x21ec3d0>>  #uses=5
-  CS<0x21d3a20> calls function 'printf'
-
-Call graph node for function: 'main'<<0x21ec3a0>>  #uses=1
-  CS<0x21ce858> calls function 'scope1'
-  CS<0x21ce8d8> calls function 'scope2'
-  CS<0x21d28d8> calls function 'scope3'
-  CS<0x21d2958> calls function 'scope4'
-  CS<0x21d29d8> calls function 'scope5'
-  CS<0x21d2a58> calls function 'scope6'
-
-Call graph node for function: 'scope1'<<0x21ec440>>  #uses=3
-  CS<0x21d2bb8> calls function 'A'
-  CS<0x21d2c38> calls function 'B'
-  CS<0x21d2cb8> calls function 'C'
-  CS<0x21d2d38> calls function 'D'
-
-Call graph node for function: 'scope2'<<0x21ec4e0>>  #uses=2
-  CS<0x21d2e78> calls function 'A'
-  CS<0x21d2ef8> calls function 'C'
-  CS<0x21d2f78> calls function 'D'
-
-Call graph node for function: 'scope3'<<0x21ec470>>  #uses=2
-  CS<0x21d30b8> calls function 'A'
-  CS<0x21d3138> calls function 'B'
-
-Call graph node for function: 'scope4'<<0x21ec670>>  #uses=2
-  CS<0x21d3278> calls function 'B'
-  CS<0x21d32f8> calls function 'D'
-  CS<0x21d3378> calls function 'scope1'
-
-Call graph node for function: 'scope5'<<0x21ec6e0>>  #uses=2
-  CS<0x21d34b8> calls function 'B'
-  CS<0x21d3538> calls function 'D'
-  CS<0x21d35b8> calls function 'A'
-
-Call graph node for function: 'printf'<<0x21ecb20>>  #uses=5
+Call graph node for function: 'printf'<<0x2284eb0>>  #uses=2
   CS<0x0> calls external node
-
-Call graph node for function: 'B'<<0x21ec8d0>>  #uses=6
-  CS<0x21d3cb0> calls function 'printf'
-
-Call graph node for function: 'C'<<0x21ec860>>  #uses=3
-  CS<0x21d3f40> calls function 'printf'
-
-Call graph node for function: 'D'<<0x21eca60>>  #uses=6
-  CS<0x21d41d0> calls function 'printf'
 

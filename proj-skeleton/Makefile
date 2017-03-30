@@ -1,6 +1,6 @@
-All : Pipair.java
-	Javac Pipair.java
+All : Bugs.java
+	javac Bugs.java
 
 
-Clean: Pipair.class
-	rm Pipair.class
+Clean: Bugs.class
+	rm Bugs.class
