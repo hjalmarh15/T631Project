@@ -134,16 +134,20 @@ class Bugs {
 				DecimalFormat df = new DecimalFormat("#.00");
 
 				double confidence = (pairSupport/funcSupport) * 100;
-
-				//here we construct our bugstring
-				if(temp.size() > 0 && confidence >= T_CONFIDENCE) {
-					bug = temp.get(0);
-					bugString += "bug: " + firstKey + " in " + bug;
-					bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
-					bugString += "support: " + (int) pairSupport + ", confidence: ";
-					bugString +=  (df.format(confidence) )  +  "%\n";
-				}
 				
+				/* our temp list contains all bugs so we iterate through each one and add
+				*  it to our bugstring
+				*/
+				for(int i = 0; i < temp.size(); i++) {
+					//here we construct our bugstring
+					if(confidence >= T_CONFIDENCE) {
+						bug = temp.get(i);
+						bugString += "bug: " + firstKey + " in " + bug;
+						bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
+						bugString += "support: " + (int) pairSupport + ", confidence: ";
+						bugString +=  (df.format(confidence) )  +  "%\n";
+					}
+				}
 				//Then we compare the callers of the second key in the pair, to the callers of the pair and generate bugs
 				//same as above but with secondKey
 				funcList = functions.get(secondKey);
@@ -151,16 +155,17 @@ class Bugs {
 				List<String> temp2 = new ArrayList<String>(funcList);
 				temp2.removeAll(pairList);
 				confidence = (pairSupport/funcSupport) * 100;
-
-				//construct our bugstring
-				if(temp2.size() > 0 && confidence >= T_CONFIDENCE) {
-					bug = temp2.get(0);
-					bugString += "bug: " + secondKey + " in " + bug;
-					bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
-					bugString += "support: " + (int) pairSupport + ", confidence: ";
-					bugString += df.format(confidence) +  "%\n";
-				}
 				
+				for(int i = 0; i < temp2.size(); i++) {
+					//construct our bugstring
+					if( confidence >= T_CONFIDENCE) {
+						bug = temp2.get(i);
+						bugString += "bug: " + secondKey + " in " + bug;
+						bugString += ", pair: (" + firstKey + ", " + secondKey + "), ";
+						bugString += "support: " + (int) pairSupport + ", confidence: ";
+						bugString += df.format(confidence) +  "%\n";
+					}
+				}
 			}
 		}
 
