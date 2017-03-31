@@ -56,12 +56,12 @@ class Bugs {
 		//Get all functions and their callers and put in their places 
 		getScopeForFunctions(lines, callers, functions);
 
-
+		System.out.println(callers);
 		//Generate all pairs of functions and the callers that call the pair
-		generatePairs(callers, pairs);
+		//generatePairs(callers, pairs);
 
 		//Generate bugs by comparing callers of pairs and callers of functions
-		generateBugs(pairs, functions);
+		//generateBugs(pairs, functions);
 	
 	}
 
@@ -197,7 +197,8 @@ class Bugs {
 			String[] words = lines[i].split(" ");
 			String last = words[words.length -1];
 			String callee = "";
-
+			List<String> extend = null; //if we need to extend a function we use this
+ 
 			//Get only the lines which contain information about functions and callees and put them in the correct hashmap
 			if(lines[i].contains("function") && !(lines[i].contains("null")) && !(lines[i].contains("0x0"))) {
 				//if  a line begins with "Call" we know its a caller
@@ -207,29 +208,37 @@ class Bugs {
 				else {
 					callee = last.split("'")[1];
 
-					
+
 					//if interprocedural analysis, we extend the functions if they are already
 					//in the caller list
 					if(IPA){
 						if(callers.get(callee) != null) {
-							List<String> extend = callers.get(callee);
-							System.out.println(extend);
+							extend = callers.get(callee);
 							if(callers.get(caller) == null) {
 								callers.put(caller, extend);
 							}
 							else {
 								Set<String> tmp = new TreeSet<String>(extend);
-								tmp.addAll(callers.get())
+								tmp.addAll(callers.get(caller));
+								callers.put(caller, new ArrayList<String>(tmp));
 							}
 						}
 					}
-					if(callers.get(caller) == null) {
-						List<String> callees = new ArrayList<String>();
-						callees.add(callee);
-						callers.put(caller, callees);
+
+					//if extend is null we've already extend the current function
+					// so we don't add it to our list.
+					if(extend == null) {
+						if(callers.get(caller) == null) {
+							List<String> callees = new ArrayList<String>();
+							callees.add(callee);
+							callers.put(caller, callees);
+						}
+						else if(!callers.get(caller).contains(callee)) {
+								callers.get(caller).add(callee);
+						}
 					}
-					else if(!callers.get(caller).contains(callee)) {
-							callers.get(caller).add(callee);
+					else {
+						extend = null;
 					}
 					if(functions.get(callee) == null) {
 						List<String> func = new ArrayList<String>();
