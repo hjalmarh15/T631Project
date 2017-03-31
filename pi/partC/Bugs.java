@@ -9,6 +9,8 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.Collections;
 import java.text.DecimalFormat;
+import java.util.Set;
+import java.util.TreeSet;
 
 class Bugs {
 
@@ -17,7 +19,7 @@ class Bugs {
 	public static double T_SUPPORT = 3; //default support value
 	public static double T_CONFIDENCE = 65; //default confidence value
 	public static String filename; //name of bitecode file that is used
-
+	public static Boolean IPA = false; //optional command line argument for interprocedural analysis
 
 	/* Our main function. This function takes care of intializing our hashmaps
 	*  and call other functions
@@ -45,7 +47,6 @@ class Bugs {
 		// Get command line arguments from user
 		getCmndLineArguments(args);
 
-
 		// Get the callgraph generated from pipair
 		String input = readFromFile(filename);
 	
@@ -55,13 +56,14 @@ class Bugs {
 		//Get all functions and their callers and put in their places 
 		getScopeForFunctions(lines, callers, functions);
 
+
 		//Generate all pairs of functions and the callers that call the pair
 		generatePairs(callers, pairs);
 
 		//Generate bugs by comparing callers of pairs and callers of functions
 		generateBugs(pairs, functions);
+	
 	}
-
 
 
 	/* This function uses the args array to find command line arguments input by the user,
@@ -76,11 +78,23 @@ class Bugs {
 		}
 		else {
 			filename = args[0];
-
+			// check if filename and i is given
+			if(args.length == 2) {
+				if(args[1].equals("i")) {
+					IPA = true;
+				}
+			}
 			//user needs to input BOTH support and confidence
-			if(args.length == 3) {
+			else if (args.length > 2) {
 				T_SUPPORT = Double.parseDouble(args[1]);
 				T_CONFIDENCE = Double.parseDouble(args[2]);
+
+				//check if support, confidence and i is given.
+				if(args.length == 4) {
+					if(args[3].equals("i")) {
+						IPA = true;
+					}
+				}
 			}
 		}
 	}
@@ -192,6 +206,23 @@ class Bugs {
 				}
 				else {
 					callee = last.split("'")[1];
+
+					
+					//if interprocedural analysis, we extend the functions if they are already
+					//in the caller list
+					if(IPA){
+						if(callers.get(callee) != null) {
+							List<String> extend = callers.get(callee);
+							System.out.println(extend);
+							if(callers.get(caller) == null) {
+								callers.put(caller, extend);
+							}
+							else {
+								Set<String> tmp = new TreeSet<String>(extend);
+								tmp.addAll(callers.get())
+							}
+						}
+					}
 					if(callers.get(caller) == null) {
 						List<String> callees = new ArrayList<String>();
 						callees.add(callee);

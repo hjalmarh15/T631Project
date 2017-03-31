@@ -1,0 +1,72 @@
+WARNING: You're attempting to print out a bitcode file.
+This is inadvisable as it may cause display problems. If
+you REALLY want to taste LLVM bitcode first-hand, you
+can force output with the `-f' option.
+
+CallGraph Root is: main
+Call graph node <<null function>><<0x21ce270>>  #uses=0
+  CS<0x0> calls function 'main'
+  CS<0x0> calls function 'scope1'
+  CS<0x0> calls function 'scope2'
+  CS<0x0> calls function 'scope3'
+  CS<0x0> calls function 'scope4'
+  CS<0x0> calls function 'scope5'
+  CS<0x0> calls function 'scope6'
+  CS<0x0> calls function 'A'
+  CS<0x0> calls function 'printf'
+  CS<0x0> calls function 'B'
+  CS<0x0> calls function 'C'
+  CS<0x0> calls function 'D'
+
+Call graph node for function: 'main'<<0x21ce310>>  #uses=1
+  CS<0x21d21d8> calls function 'scope1'
+  CS<0x21cfbe8> calls function 'scope2'
+  CS<0x21cfc68> calls function 'scope3'
+  CS<0x21cfce8> calls function 'scope4'
+  CS<0x21cfd68> calls function 'scope5'
+  CS<0x21cf058> calls function 'scope6'
+
+Call graph node for function: 'scope5'<<0x21f3210>>  #uses=2
+  CS<0x21e3b98> calls function 'B'
+  CS<0x21e3c18> calls function 'D'
+  CS<0x21e3c98> calls function 'A'
+
+Call graph node for function: 'scope1'<<0x21ea700>>  #uses=3
+  CS<0x21cf1b8> calls function 'A'
+  CS<0x21cf238> calls function 'B'
+  CS<0x21cf2b8> calls function 'C'
+  CS<0x21cf338> calls function 'D'
+
+Call graph node for function: 'scope2'<<0x21ea7a0>>  #uses=2
+  CS<0x21e3558> calls function 'A'
+  CS<0x21e35d8> calls function 'C'
+  CS<0x21e3658> calls function 'D'
+
+Call graph node for function: 'scope3'<<0x21ea730>>  #uses=2
+  CS<0x21e3798> calls function 'A'
+  CS<0x21e3818> calls function 'B'
+
+Call graph node for function: 'scope4'<<0x21f31a0>>  #uses=2
+  CS<0x21e3958> calls function 'B'
+  CS<0x21e39d8> calls function 'D'
+  CS<0x21e3a58> calls function 'scope1'
+
+Call graph node for function: 'scope6'<<0x21ea8a0>>  #uses=2
+  CS<0x21e3dd8> calls function 'B'
+  CS<0x21e3e58> calls function 'D'
+
+Call graph node for function: 'A'<<0x21ea690>>  #uses=5
+  CS<0x21e40c0> calls function 'printf'
+
+Call graph node for function: 'printf'<<0x21f3610>>  #uses=5
+  CS<0x0> calls external node
+
+Call graph node for function: 'B'<<0x21f33c0>>  #uses=6
+  CS<0x21e4330> calls function 'printf'
+
+Call graph node for function: 'C'<<0x21f3350>>  #uses=3
+  CS<0x21e45a0> calls function 'printf'
+
+Call graph node for function: 'D'<<0x21f3550>>  #uses=6
+  CS<0x21e4810> calls function 'printf'
+
