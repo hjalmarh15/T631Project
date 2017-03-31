@@ -1,6 +1,6 @@
-All : Bugs.java
+all : Bugs.java
 	javac Bugs.java
 
 
-Clean: Bugs.class
+clean: Bugs.class
 	rm Bugs.class

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 opt-3.3 -print-callgraph $1 2> /tmp/input 1>/dev/null
-java -cp "/home/klee/T631Project/proj-skeleton" Bugs /tmp/input $2 $3
+java -cp ../ Bugs /tmp/input $2 $3
