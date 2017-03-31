@@ -16,12 +16,14 @@ class Bugs {
 	public static String filename;
 
 	public static void main(String[] args) {
-		//hashmap that contains our functions and their uses
-
+		//Hashmap that contains our functions and their uses
 		Map<String, List<String>> functions = new HashMap<String, List<String>>();
+		//Hashmap that contains our accumulated pairs of functions
 		Map<List<String>, List<String>> pairs = new HashMap<List<String>, List<String>>();
+		//Hashmap that contains our callers
 		Map<String, List<String>> callers = new HashMap<String, List<String>>();
 
+		//Analyze the type of input from user
 		if(args.length < 1) {
 			System.out.println("You need to input bytecode file");
 		}
@@ -38,9 +40,11 @@ class Bugs {
 		//split our input into lines
 		String[] lines = input.split("\n");
 
+		//Get all functions and their callers and put in their places 
 		getScopeForFunctions(lines, callers, functions);
-		
+		//Generate all pairs of functions and the callers that call the pair
 		generatePairs(callers, pairs);
+		//Generate bugs by comparing callers of pairs and callers of functions
 		generateBugs(pairs, functions);
 	}
 
@@ -57,6 +61,7 @@ class Bugs {
 		String bugString = "";
 
 		for(Map.Entry<List<String>, List<String>> entry : pairs.entrySet()) {
+			//Is the support of the pair greater or eaqual too T_SUPPORT?
 			pairSupport = entry.getValue().size();
 			if(pairSupport >= T_SUPPORT) {
 				firstKey = entry.getKey().get(0);
@@ -64,7 +69,7 @@ class Bugs {
 
 				pairList = entry.getValue();
 
-				//first check firstkey
+				//First we compare the callers of the first key in the pair, to the callers of the pair and generate bugs
 				funcList = functions.get(firstKey);
 				funcSupport = funcList.size();
 				List<String> temp = new ArrayList<String>(funcList);
@@ -80,7 +85,7 @@ class Bugs {
 					bugString +=  (df.format(confidence) )  +  "%\n";
 				}
 				
-				//then secondKey
+				//Then we compare the callers of the second key in the pair, to the callers of the pair and generate bugs
 				funcList = functions.get(secondKey);
 				funcSupport = funcList.size();
 				List<String> temp2 = new ArrayList<String>(funcList);
@@ -108,6 +113,7 @@ class Bugs {
 			String callee = "";
 			int calls = 0;
 
+			//Get only the lines which contain information about functions and callees and put them in the correct hashmap
 			if(lines[i].contains("function") && !(lines[i].contains("null")) && !(lines[i].contains("0x0"))) {
 				if(lines[i].startsWith("Call")) {
 					caller = lines[i].split("'")[1];
@@ -136,12 +142,13 @@ class Bugs {
 
 	}
 
-
 	public static void generatePairs(Map<String, List<String>> c, Map<List<String>, List<String>> pairs) {
+		//Iterate through complete list of callers
 		for(Map.Entry<String, List<String>> entry : c.entrySet()) {
 			List<String> cList = entry.getValue();
 			String caller = entry.getKey();
 			if((cList.size() > 1)) {
+				//Iterate through the values of each callees of given caller and accumulate a list of pairs
 				for(int i = 0; i < cList.size() -1 ; i++) {
 					for(int j = i+1; j < cList.size(); j++) {
 						List<String> keys = new ArrayList<String>();
