@@ -56,7 +56,11 @@ class Bugs {
 		//Get all functions and their callers and put in their places 
 		getScopeForFunctions(lines, callers, functions);
 
+
 		
+
+		
+
 		//Generate all pairs of functions and the callers that call the pair
 		generatePairs(callers, pairs);
 
